@@ -1,8 +1,6 @@
-module github.com/GilarYa/tesbackendp3
+module github.com/angkringankuy/backendyak
 
-go 1.21
-
-toolchain go1.21.3
+go 1.21.3
 
 require (
 	github.com/aiteung/atdb v0.1.1

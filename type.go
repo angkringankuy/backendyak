@@ -1,14 +1,9 @@
 package testbackendp3
 
-import (
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	// "time"
-)
-
 type User struct {
-	ID       primitive.ObjectID `bson:"_id,omitempty" json:"_id,omitempty"`
 	Username string             `json:"username" bson:"username"`
 	Password string             `json:"password" bson:"password"`
+	Role     string `json:"role,omitempty" bson:"role,omitempty"`
 }
 
 type Credential struct {
