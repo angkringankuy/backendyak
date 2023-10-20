@@ -1,4 +1,4 @@
-package testbackendp3
+package backendyak
 
 type User struct {
 	Username string             `json:"username" bson:"username"`
