@@ -1,3 +1,3 @@
-[Package Backend](https://github.com/angkringankuy/p3backendgcp/blob/main/p3backendgcp.go)
+[Package Backend](https://pkg.go.dev/github.com/angkringankuy/backendyak)
 
 #PROJEK3
