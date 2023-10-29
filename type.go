@@ -1,8 +1,9 @@
 package backendyak
 
 type User struct {
-	Username string             `json:"username" bson:"username"`
-	Password string             `json:"password" bson:"password"`
+	Email    string `bson:"email,omitempty" json:"email,omitempty"`
+	Username string `bson:"username,omitempty" json:"username,omitempty"`
+	Password string `bson:"password,omitempty" json:"password,omitempty"`
 	Role     string `json:"role,omitempty" bson:"role,omitempty"`
 }
 

@@ -17,20 +17,6 @@ func TestGeneratePrivateKeyPaseto(t *testing.T) {
 	hasil, err := watoken.Encode("syahid", privateKey)
 	fmt.Println(hasil, err)
 }
-func TestValidateToken(t *testing.T) {
-	tokenstring := "v4.public.eyJleHAiOiIyMDIzLTEwLTIwVDAwOjM3OjQ1KzA3OjAwIiwiaWF0IjoiMjAyMy0xMC0xOVQyMjozNzo0NSswNzowMCIsImlkIjoic3lhaGlkIiwibmJmIjoiMjAyMy0xMC0xOVQyMjozNzo0NSswNzowMCJ91N0jN5aGDQlBLw33aCX75HiVm0hMvYXepxiJvNh6WTcYKO8j9LyeF555AD_vJDZSvL4lb8YHv10r-PX0FTf1BA" // Gantilah dengan token PASETO yang sesuai
-	publicKey := "505404e369acbcb337dda5e44cc637df44036d7f031f773f69810e9f0f82e773"
-	payload, _err := watoken.Decode(publicKey, tokenstring)
-	if _err != nil {
-		fmt.Println("expired token", _err)
-	} else {
-		fmt.Println("ID: ", payload.Id)
-		fmt.Println("Di mulai: ", payload.Nbf)
-		fmt.Println("Di buat: ", payload.Iat)
-		fmt.Println("Expired: ", payload.Exp)
-	}
-}
-
 // Hash Pass
 func TestGeneratePasswordHash(t *testing.T) {
 	password := "kepo"
@@ -66,15 +52,4 @@ func TestIsPasswordValid(t *testing.T) {
 
 	anu := IsPasswordValid(mconn, "user", userdata)
 	fmt.Println(anu)
-}
-
-// User
-func TestInsertUser(t *testing.T) {
-	mconn := SetConnection("MONGOSTRING", "proyek3")
-	var userdata User
-	userdata.Username = "syahid"
-	userdata.Password = "kepo"
-
-	nama := InsertUser(mconn, "user", userdata)
-	fmt.Println(nama)
 }
