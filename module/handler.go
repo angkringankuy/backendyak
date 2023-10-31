@@ -46,3 +46,24 @@ func GCFReturnStruct(DataStuct any) string {
 	jsondata, _ := json.Marshal(DataStuct)
 	return string(jsondata)
 }
+
+func Register(Mongoenv, dbname string, r *http.Request) string {
+    resp := new(model.Credential)
+    userdata := new(model.User)
+    resp.Status = false
+    conn := SetConnection(Mongoenv, dbname)
+    err := json.NewDecoder(r.Body).Decode(&userdata)
+    if err != nil {
+        resp.Message = "error parsing application/json: " + err.Error()
+    } else {
+        resp.Status = true
+        insertedID, err := InsertUser(conn, "user", *userdata)
+        if err != nil {
+            resp.Message = "Gagal memasukkan data ke database: " + err.Error()
+        } else {
+            resp.Message = "Berhasil Input data dengan ID: " + insertedID.Hex()
+        }
+    }
+    return GCFReturnStruct(resp)
+}
+
