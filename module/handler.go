@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"github.com/whatsauth/watoken"
 
 	model "github.com/angkringankuy/backendyak/model"
@@ -66,4 +67,55 @@ func Register(Mongoenv, dbname string, r *http.Request) string {
     }
     return GCFReturnStruct(resp)
 }
+
+func DeleteUsers(Mongoenv, dbname string, r *http.Request) string {
+    resp := new(model.Credential)
+    userdata := new(model.User)
+    resp.Status = false
+    conn := SetConnection(Mongoenv, dbname)
+    err := json.NewDecoder(r.Body).Decode(&userdata)
+    if err != nil {
+        resp.Message = "error parsing application/json: " + err.Error()
+    } else {
+        resp.Status = true
+        err := DeleteUser(conn, "user", userdata.Username) // Menggunakan DeleteUser untuk menghapus data berdasarkan username
+        if err != nil {
+            resp.Message = "Gagal menghapus data dari database: " + err.Error()
+        } else {
+            resp.Message = "Berhasil menghapus data dengan username: " + userdata.Username
+        }
+    }
+    return GCFReturnStruct(resp)
+}
+
+func ResetPassword(Mongoenv, dbname string, r *http.Request) string {
+    resp := new(model.Credential)
+    userdata := new(model.User)
+    resp.Status = false
+    conn := SetConnection(Mongoenv, dbname)
+    err := json.NewDecoder(r.Body).Decode(&userdata)
+    if err != nil {
+        resp.Message = "error parsing application/json: " + err.Error()
+    } else {
+        resp.Status = true
+        // Reset password logic
+        pass, _ := HashPassword(userdata.Password)
+        update := bson.M{"password": pass}
+        filter := bson.M{"username": userdata.Username}
+        err := UpdateOneDoc(conn, "user", filter, update)
+        if err != nil {
+            resp.Message = "Gagal mereset password: " + err.Error()
+        } else {
+            resp.Message = "Berhasil mereset password: " + userdata.Username
+        }
+    }
+    return GCFReturnStruct(resp)
+}
+
+
+
+
+
+
+
 

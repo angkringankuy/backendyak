@@ -13,7 +13,6 @@ import (
 func TestInsertUser(t *testing.T) {
 	mconn := SetConnection("MONGOSTRING", "proyek3")
 	var userdata User
-	userdata.Email = "masyahida4@gmail.com"
 	userdata.Username = "syahid"
 	userdata.Role = "admin"
 	userdata.Password = "kepoah"

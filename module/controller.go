@@ -44,34 +44,33 @@ func GetAllDocs(db *mongo.Database, col string, docs interface{}) interface{} {
 	return docs
 }
 
-func UpdateOneDoc(db *mongo.Database, id primitive.ObjectID, col string, docs interface{}) (err error) {
-	cols := db.Collection(col)
-	filter := bson.M{}
-	update := bson.M{"$set": docs}
-	result, err := cols.UpdateOne(context.Background(), filter, update)
-	if err != nil {
-		fmt.Printf("UpdateOneDoc: %v\n", err)
-	}
-	if result.ModifiedCount == 0 {
-		err = errors.New("no data has been changed with the specified id")
-		return
-	}
-	return
+func UpdateOneDoc(db *mongo.Database, col string, filter, update interface{}) (err error) {
+    cols := db.Collection(col)
+    result, err := cols.UpdateOne(context.Background(), filter, bson.M{"$set": update})
+    if err != nil {
+        fmt.Printf("UpdateOneDoc: %v\n", err)
+    }
+    if result.ModifiedCount == 0 {
+        err = errors.New("no data has been changed with the specified filter")
+        return err
+    }
+    return
 }
 
-func DeleteOneDoc(db *mongo.Database, id primitive.ObjectID, col string) (err error) {
-	cols := db.Collection(col)
-	filter := bson.M{}
-	result, err := cols.DeleteOne(context.Background(), filter)
-	if err != nil {
-		fmt.Printf("DeleteOneDoc: %v %v\n", id, err)
-	}
-	if result.DeletedCount == 0 {
-		err = fmt.Errorf("no data has been deleted with the specified id")
-		return
-	}
-	return
+
+func DeleteOneDoc(db *mongo.Database, col string, filter bson.M) (err error) {
+    cols := db.Collection(col)
+    result, err := cols.DeleteOne(context.Background(), filter)
+    if err != nil {
+        fmt.Printf("DeleteOneDoc: %v\n", err)
+    }
+    if result.DeletedCount == 0 {
+        err = fmt.Errorf("no data has been deleted with the specified filter")
+        return err
+    }
+    return
 }
+
 
 // User
 func InsertUser(db *mongo.Database, col string, userdata model.User) (insertedID primitive.ObjectID, err error) {
@@ -107,3 +106,32 @@ func GetAllUser(db *mongo.Database, col string) (userlist []model.User) {
 	}
 	return userlist
 }
+
+func DeleteUser(db *mongo.Database, col, username string) (err error) {
+    filter := bson.M{"username": username} // Sesuaikan dengan field yang digunakan untuk username
+    err = DeleteOneDoc(db, col, filter)
+    if err != nil {
+        fmt.Printf("DeleteUser: %v %v\n", username, err)
+    }
+    return err
+}
+
+func UpdatePassword(mongoconn *mongo.Database, user model.User) (err error) {
+    pass, _ := HashPassword(user.Password)
+    update := bson.M{"password": pass}
+    
+    filter := bson.M{"username": user.Username}
+    err = UpdateOneDoc(mongoconn, "user", filter, update)
+    if err != nil {
+        fmt.Printf("UpdatePassword: %v %v\n", user.Username, err)
+    }
+    
+    return err
+}
+
+
+
+
+
+
+
