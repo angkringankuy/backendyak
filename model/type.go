@@ -16,7 +16,12 @@ type Credential struct {
 }
 
 type Helper	struct {
-	Name     string             `bson;"name,omitempty" json:"name,omitempty"`
+	Name     string             `bson:"name,omitempty" json:"name,omitempty"`
 	Email    string             `bson:"email,omitempty" json:"email,omitempty"`
 	Message  string				`bson:"message,omitempty" json:"message,omitempty"`
+}
+
+type Transaksi struct {
+	Email    string      		`bson:"email,omitempty" json:"email,omitempty"`
+	OrderID  int    			`bson:"orderid,omitempty" json:"orderid,omitempty"`
 }

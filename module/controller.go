@@ -129,7 +129,7 @@ func UpdatePassword(mongoconn *mongo.Database, user model.User) (err error) {
     return err
 }
 
-func Helper(db *mongo.Database, col string, name, email, message string) (insertedID primitive.ObjectID, err error) {
+func CustomerService(db *mongo.Database, col string, name, email, message string) (insertedID primitive.ObjectID, err error) {
 	contact := model.Helper{
 		Name:    name,
 		Email:   email,
@@ -140,6 +140,15 @@ func Helper(db *mongo.Database, col string, name, email, message string) (insert
 	return
 }
 
+func InsertPayment(db *mongo.Database, col string, email string, orderid int) (insertedID primitive.ObjectID, err error) {
+	contact := model.Transaksi{
+		Email:   email,
+		OrderID: orderid,
+	}
+
+	insertedID, err = InsertOneDoc(db, col, contact)
+	return
+}
 
 
 
