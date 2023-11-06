@@ -142,7 +142,7 @@ func Transaksi(Mongoenv, dbname string, r *http.Request) string {
         resp.Message = "error parsing application/json: " + err.Error()
     } else {
         resp.Status = true
-        insertedID, err := InsertPayment(conn, "transaksi", data.Email, data.Paket, data.OrderID, data.NoHP)
+        insertedID, err := InsertPayment(conn, "transaksi", data.Email, data.OrderID, data.NoHP, data.IDML, data.IDServer)
         if err != nil {
             resp.Message = "Gagal memasukkan data ke database: " + err.Error()
         } else {

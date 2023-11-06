@@ -25,6 +25,7 @@ type Transaksi struct {
 	Email    string      		`bson:"email,omitempty" json:"email,omitempty"`
 	OrderID  int    			`bson:"orderid,omitempty" json:"orderid,omitempty"`
 	NoHP	 int				`bson:"nohp,omitempty" json:"nohp,omitempty"`
-	Paket    string				`bson:"paket,omitempty" json:"paket,omitempty"`
+	IDML     int				`bson:"idml,omitempty" json:"idml,omitempty"`
+	IDServer int				`bson:"idserver,omitempty" json:"idserver,omitempty"`
 }
 
