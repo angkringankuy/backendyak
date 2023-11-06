@@ -24,4 +24,7 @@ type Helper	struct {
 type Transaksi struct {
 	Email    string      		`bson:"email,omitempty" json:"email,omitempty"`
 	OrderID  int    			`bson:"orderid,omitempty" json:"orderid,omitempty"`
+	NoHP	 int				`bson:"nohp,omitempty" json:"nohp,omitempty"`
+	Paket    string				`bson:"paket,omitempty" json:"paket,omitempty"`
 }
+
