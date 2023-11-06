@@ -112,6 +112,26 @@ func ResetPassword(Mongoenv, dbname string, r *http.Request) string {
     return GCFReturnStruct(resp)
 }
 
+func HelperMessage(Mongoenv, dbname string, r *http.Request) string {
+    resp := new(model.Credential)
+    data := new(model.Helper)
+    resp.Status = false
+    conn := SetConnection(Mongoenv, dbname)
+    err := json.NewDecoder(r.Body).Decode(&data)
+    if err != nil {
+        resp.Message = "error parsing application/json: " + err.Error()
+    } else {
+        resp.Status = true
+        insertedID, err := Helper(conn, "help", data.Name, data.Email, data.Message)
+        if err != nil {
+            resp.Message = "Gagal memasukkan data ke database: " + err.Error()
+        } else {
+            resp.Message = "Berhasil Input data dengan ID: " + insertedID.Hex()
+        }
+    }
+    return GCFReturnStruct(resp)
+}
+
 
 
 

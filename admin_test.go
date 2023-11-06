@@ -3,10 +3,8 @@ package backendyak
 import (
 	"fmt"
 	"testing"
-
-	model "github.com/angkringankuy/backendyak/model"
 	module "github.com/angkringankuy/backendyak/module"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+
 )
 
 // user

@@ -129,7 +129,16 @@ func UpdatePassword(mongoconn *mongo.Database, user model.User) (err error) {
     return err
 }
 
+func Helper(db *mongo.Database, col string, name, email, message string) (insertedID primitive.ObjectID, err error) {
+	contact := model.Helper{
+		Name:    name,
+		Email:   email,
+		Message: message,
+	}
 
+	insertedID, err = InsertOneDoc(db, col, contact)
+	return
+}
 
 
 
