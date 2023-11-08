@@ -132,9 +132,9 @@ func CSMessage(Mongoenv, dbname string, r *http.Request) string {
     return GCFReturnStruct(resp)
 }
 
-func Transaksi(Mongoenv, dbname string, r *http.Request) string {
+func GCFInfoTransaksi(Mongoenv, dbname string, r *http.Request) string {
     resp := new(model.Credential)
-    data := new(model.Transaksi)
+    data := new(model.InfoTransaksi)
     resp.Status = false
     conn := SetConnection(Mongoenv, dbname)
     err := json.NewDecoder(r.Body).Decode(&data)
@@ -142,7 +142,7 @@ func Transaksi(Mongoenv, dbname string, r *http.Request) string {
         resp.Message = "error parsing application/json: " + err.Error()
     } else {
         resp.Status = true
-        insertedID, err := InsertPayment(conn, "transaksi", data.Email, data.OrderID, data.NoHP, data.IDML, data.IDServer)
+        insertedID, err := InsertDataTransaksi(conn, "transaksi", data.Email, data.InfoBeli, data.OrderID, data.NoHP)
         if err != nil {
             resp.Message = "Gagal memasukkan data ke database: " + err.Error()
         } else {

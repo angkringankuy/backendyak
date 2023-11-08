@@ -140,18 +140,20 @@ func CustomerService(db *mongo.Database, col string, name, email, message string
 	return
 }
 
-func InsertPayment(db *mongo.Database, col string, email string, orderid, nohp, idml, idserver int) (insertedID primitive.ObjectID, err error) {
-	contact := model.Transaksi{
+func InsertDataTransaksi(db *mongo.Database, col, email, infobeli string, orderid, nohp  int) (insertedID primitive.ObjectID, err error) {
+	contact := model.InfoTransaksi{
 		Email:   email,
+		InfoBeli : infobeli,
 		OrderID: orderid,
 		NoHP : nohp,
-		IDML : idml,
-		IDServer : idserver,
 	}
 
 	insertedID, err = InsertOneDoc(db, col, contact)
 	return
 }
+
+
+
 
 
 
