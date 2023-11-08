@@ -140,7 +140,7 @@ func CustomerService(db *mongo.Database, col string, name, email, message string
 	return
 }
 
-func InsertDataTransaksi(db *mongo.Database, col, email, infobeli string, orderid, nohp  int) (insertedID primitive.ObjectID, err error) {
+func InsertDataTransaksi(db *mongo.Database, col, email, infobeli, orderid, nohp  string) (insertedID primitive.ObjectID, err error) {
 	contact := model.InfoTransaksi{
 		Email:   email,
 		InfoBeli : infobeli,
